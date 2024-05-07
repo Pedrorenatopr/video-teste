@@ -8,14 +8,54 @@
 </head>
 <body>
 
-    <video id="video" src="video-teste.mp4"
-    width="100%"
-    height=""
-    autoplay
-    muted
-    >
-        
-    </video>
+    <section class="section section-billboard lazy-background visible" id="billboard" style="
+        --bgDesktop: url('');
+        --bgMobile: url('');
+    ">
+
+            <div class="wrapper-video">
+            <video class="" loop="" playsinline="" autoplay="" muted="" preload="metadata">
+                <source data-src="https://nwadv.com.br/wp-content/uploads/2024/01/reduce.mp4" type="video/mp4" src="https://nwadv.com.br/wp-content/uploads/2024/01/reduce.mp4">
+            </video>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    let lazyVideos = [...document.querySelectorAll("video.lazy")];
+
+                    if ("IntersectionObserver" in window) {
+                        let lazyVideoObserver = new IntersectionObserver(function(entries) {
+                            entries.forEach(function(video) {
+                                if (video.isIntersecting) {
+                                    for (let source in video.target.children) {
+                                        let videoSource = video.target.children[source];
+                                        if (typeof videoSource.tagName === "string" && videoSource.tagName === "SOURCE") {
+                                            videoSource.src = videoSource.dataset.src;
+                                        }
+                                    }
+
+                                    video.target.load();
+                                    video.target.classList.remove("lazy");
+                                    lazyVideoObserver.unobserve(video.target);
+                                }
+                            });
+                        });
+
+                        lazyVideos.forEach(function(lazyVideo) {
+                            lazyVideoObserver.observe(lazyVideo);
+                        });
+                    }
+                });
+            </script>
+        </div>
+    
+    <div class="wrapper-center">
+        <div class="box custom-border w924">
+                            <h5>Somos o <b>Nelson Wilians</b> Advogados</h5>
+                        <div class="description"><p><strong>Nascemos de um grande, saudável e ambicioso sonho:</strong> ser o maior escritório de advocacia empresarial do país.</p>
+</div>
+        </div>
+        <a href="#proximo" title="Próximo" class="arrow-down">&nbsp;</a>
+    </div>
+</section>
     
 </body>
 </html>
